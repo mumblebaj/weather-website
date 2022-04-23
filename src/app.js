@@ -22,7 +22,7 @@ hbs.registerPartials(partialPath)
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
 
-// Server up the main page
+// Serve up the main page
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather',
@@ -62,10 +62,20 @@ app.get('/weather', (req, res) => {
                 if (error) {
                     return res.send({ error })
                 }
-              res.send({
-                  forecast: forecastData,
-                  location,
-                  address: req.query.address
+                res.send({
+                    location: forecastData.location.name,
+                    region: forecastData.location.region,
+                    country: forecastData.location.country,
+                    weatherDesc: forecastData.current.weather_descriptions[0],
+                    currentTemp: forecastData.current.temperature,
+                    windSpeed: forecastData.current.wind_speed,
+                    windDirection: forecastData.current.wind_dir,
+                    rainData: forecastData.current.precip,
+                    humidity: forecastData.current.humidity,
+                    visibility: forecastData.current.visibility,
+                    uvIndex: forecastData.current.uv_index,
+                    weatherIcon: forecastData.current.weather_icons[0],
+                    address: req.query.address
               })
             })
         })
